@@ -9,8 +9,8 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 	"github.com/drone/drone-cache-lib/storage"
-	"github.com/drone-plugins/drone-s3-cache/storage/s3"
 	"github.com/urfave/cli"
+	"storage/s3"
 )
 
 var build = "0" // build number set at compile-time
@@ -74,9 +74,10 @@ func main() {
 		// Build information (for setting defaults)
 
 		cli.StringFlag{
-			Name:   "repo.owner",
-			Usage:  "repository owner",
-			EnvVar: "DRONE_REPO_OWNER",
+			Name:  "repo.owner",
+			Usage: "repository owner",
+			// Fixate: This is where the bucket name comes from, so let's allow us to specify that
+			EnvVar: "PLUGIN_BUCKET,DRONE_REPO_OWNER",
 		},
 		cli.StringFlag{
 			Name:   "repo.name",
